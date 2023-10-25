@@ -1,0 +1,43 @@
+bootstrap 轮播图实现大小自适应
+当轮播图的大小不统一时，此方法能保持图片原来的宽高比例，但是会出现留白，
+
+代码如下：
+
+1、引入所需的css 文件和js文件
+
+2、     <div id="myCarousel" class="carousel slide">
+    <ol class="carousel-indicators">
+             <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+
+<li data-target="#myCarousel" data-slide-to="1"></li>
+
+<li data-target="#myCarousel" data-slide-to="2" ></li>
+          </ol> 
+    <div class="carousel-inner aaa" style="height: 750px;" >
+<div style='background-image: url(${li.filePath});' class="item active banner">
+</div>
+
+<div style='background-image: url(${li.filePath});' class="item banner">
+</div>
+
+<div style='background-image: url(${li.filePath});' class="item banner">
+</div>
+
+</div>
+<a class="left carousel-control" style="background-color: rgba(255,255,255,0);opacity:0" href="#myCarousel" role="button" data-slide="prev"></a>
+  <a style="background-color: rgba(255,255,255,0);opacity:0;" class="right carousel-control" href="#myCarousel" role="button" data-slide="next"></a>
+</div>
+
+
+
+需要做的是在head的style中写入一个样式：
+
+<style type="text/css">
+   #myCarousel  .carousel-inner > .item > img {
+	display: block;
+	width:100%;
+	height:div的高度，我这里是设置的750px;
+}
+</style>
+
+此方法就是不显示轮播图中的img ，用DIV的背景图代替轮播图原来的IMG

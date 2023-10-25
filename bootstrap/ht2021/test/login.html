@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <title>『我的』后台管理</title>
+	<link rel="stylesheet" type="text/css" href="css/admin_login.css"/>
+</head>
+<body>
+<div class="admin_login_wrap">
+    <h1>后台管理</h1>
+    <div class="adming_login_border">
+        <div class="admin_input">
+            <form action="index.html" method="post">
+                <ul class="admin_items">
+                    <li>
+                        <label for="user">用户名：</label>
+                        <input type="text" name="username" value="admin" id="user" size="35" class="admin_input_style" />
+                    </li>
+                    <li>
+                        <label for="pwd">密码：</label>
+                        <input type="password" name="pwd" value="admin" id="pwd" size="35" class="admin_input_style" />
+                    </li>
+                    <li>
+                    <table width=100% border="0">
+                      <tr>
+                        <td><label for="yzm">验证码：</label></td>
+                        <td><a href=""><canvas id="canvas" width="100" height="33" onclick="dj()" style="border: 1px solid #ccc;border-radius: 5px;"></canvas></a></td>
+                      </tr>
+                    </table>
+                    <input type="text" name="yzm" value="请输入验证码（区分大小写）" id="pwd" size="35"  class="admin_input_style" />
+                    </li>
+                    <li>
+                    <table width=100% border="0">
+                      <tr>
+                        <td><input type="submit" tabindex="3" value="登录" class="btn btn-primary" /></td>
+                        <td width="20"></td>
+                        <td><input type="button" onclick=javascript:jump() value="取消" class="btn btn-primary" /></td>
+                      </tr>
+                    </table>
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+    <p class="admin_copyright"><a tabindex="5" href="#" target="_blank">返回首页</a> &copy; 2021 Powered by ：<a href="" target="_blank">工程学院</a></p>
+</div>
+</body>
+</html>
+
+
+
+<script>
+
+function jump(){
+	window.location.href="exit.php";//设置跳转的地址
+}
+</script>
+
+    
+<script type="text/javascript">  
+var show_num = [];
+  draw(show_num);
+  function dj() {
+    draw(show_num);
+  }
+  function sublim() {
+    var val = document.getElementById("text").value;
+    var num = show_num.join("");
+    if (val == '') {
+      alert('请输入验证码！');
+    } else if (val == num) {
+      alert('提交成功！');
+      document.getElementById(".input-val").val('');
+      draw(show_num);
+
+    } else {
+      alert('验证码错误！\n你输入的是:  ' + val + "\n正确的是:  " + num + '\n请重新输入！');
+      document.getElementById("text").value = '';
+      draw(show_num);
+    }
+
+
+
+  }
+  function draw(show_num) {
+    var canvas_width = document.getElementById('canvas').clientWidth;
+    var canvas_height = document.getElementById('canvas').clientHeight;
+    var canvas = document.getElementById("canvas");//获取到canvas的对象，演员
+    var context = canvas.getContext("2d");//获取到canvas画图的环境，演员表演的舞台
+    canvas.width = canvas_width;
+    canvas.height = canvas_height;
+    var sCode = "A,B,C,E,F,G,H,J,K,L,M,N,P,Q,R,S,T,W,X,Y,Z,1,2,3,4,5,6,7,8,9,0,q,w,e,r,t,y,u,i,o,p,a,s,d,f,g,h,j,k,l,z,x,c,v,b,n,m";
+    var aCode = sCode.split(",");
+    var aLength = aCode.length;//获取到数组的长度
+
+    for (var i = 0; i <= 3; i++) {
+      var j = Math.floor(Math.random() * aLength);//获取到随机的索引值
+      var deg = Math.random() * 30 * Math.PI / 180;//产生0~30之间的随机弧度
+      var txt = aCode[j];//得到随机的一个内容
+      show_num[i] = txt;
+      var x = 10 + i * 20;//文字在canvas上的x坐标
+      var y = 20 + Math.random() * 8;//文字在canvas上的y坐标
+      context.font = "bold 23px 微软雅黑";
+
+      context.translate(x, y);
+      context.rotate(deg);
+
+      context.fillStyle = randomColor();
+      context.fillText(txt, 0, 0);
+
+      context.rotate(-deg);
+      context.translate(-x, -y);
+    }
+    for (var i = 0; i <= 5; i++) { //验证码上显示线条
+      context.strokeStyle = randomColor();
+      context.beginPath();
+      context.moveTo(Math.random() * canvas_width, Math.random() * canvas_height);
+      context.lineTo(Math.random() * canvas_width, Math.random() * canvas_height);
+      context.stroke();
+    }
+    for (var i = 0; i <= 30; i++) { //验证码上显示小点
+      context.strokeStyle = randomColor();
+      context.beginPath();
+      var x = Math.random() * canvas_width;
+      var y = Math.random() * canvas_height;
+      context.moveTo(x, y);
+      context.lineTo(x + 1, y + 1);
+      context.stroke();
+    }
+  }
+  function randomColor() {//得到随机的颜色值
+    var r = Math.floor(Math.random() * 256);
+    var g = Math.floor(Math.random() * 256);
+    var b = Math.floor(Math.random() * 256);
+    return "rgb(" + r + "," + g + "," + b + ")";
+  }
+</script>  
